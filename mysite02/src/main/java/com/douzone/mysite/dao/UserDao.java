@@ -60,12 +60,12 @@ public class UserDao {
 			pstmt.setString(2, vo.getPassword());
 
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				result = new UserVo();
-				
+
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
-				
+
 				result.setNo(no);
 				result.setName(name);
 			}
@@ -90,6 +90,87 @@ public class UserDao {
 		}
 
 		return result;
+	}
+
+	public UserVo findByNo(Long no) {
+		UserVo result = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = "select name, password, gender, email, no from user where no = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setLong(1, no);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = new UserVo();
+
+				String name = rs.getString(1);
+				String password = rs.getString(2);
+				String gender = rs.getString(3);
+				String email = rs.getString(4);
+				Long userNo = rs.getLong(5);
+
+				result.setName(name);
+				result.setPassword(password);
+				result.setGender(gender);
+				result.setEmail(email);
+				result.setNo(userNo);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public void update(UserVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = "update user set name = ?, password = password(?), gender = ? where no = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setLong(4, vo.getNo());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private Connection getConnection() throws SQLException {
