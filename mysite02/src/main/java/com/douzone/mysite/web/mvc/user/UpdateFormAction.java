@@ -9,33 +9,28 @@ import javax.servlet.http.HttpSession;
 
 import com.douzone.mysite.dao.UserDao;
 import com.douzone.mysite.vo.UserVo;
-import com.douzone.web2.mvc.Action;
-import com.douzone.web2.util.MvcUtil;
+import com.douzone.web.mvc.Action;
+import com.douzone.web.util.MvcUtil;
 
 public class UpdateFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// access control
+		// Access Control(보안, 인증체크)
 		HttpSession session = request.getSession();
-		if (session == null) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) {
 			MvcUtil.redirect(request.getContextPath(), request, response);
 			return;
 		}
-		UserVo authuser = (UserVo) session.getAttribute("authUser");
-		if (authuser == null) {
-			MvcUtil.redirect(request.getContextPath(), request, response);
-			return;
-		}
-		//////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////
 		
-		UserVo vo = new UserDao().findByNo(authuser.getNo());
-		request.setAttribute("name", vo.getName());
-		request.setAttribute("password", vo.getPassword());
-		request.setAttribute("gender", vo.getGender());
-		request.setAttribute("email", vo.getEmail());
-		request.setAttribute("no", vo.getNo());
+		Long no = authUser.getNo();
+		UserVo userVo = new UserDao().findByNo(no);
+		
+		request.setAttribute("userVo", userVo);
 		MvcUtil.forward("user/updateform", request, response);
 	}
+
 
 }
