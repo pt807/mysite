@@ -75,13 +75,20 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:if test="${pageVo.prev }">
+							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.startPage - 1 }&amount=${pageVo.amount }">◀</a></li>
+						</c:if>
+						
+						<c:forEach var="num" begin="${pageVo.startPage }" end="${pageVo.endPage }">
+							<li class='${pageVo.pageNum eq num ? "selected" : "" }'>
+							<a href="${pageContext.request.contextPath }/board?pageNum=${num }&amount=${pageVo.amount }">${num }</a>
+							</li>
+						
+						</c:forEach>
+						
+						<c:if test="${pageVo.next }">
+							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.endPage + 1 }&amount=${pageVo.amount }">▶</a></li>
+						</c:if>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
