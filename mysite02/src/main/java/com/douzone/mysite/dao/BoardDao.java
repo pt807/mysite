@@ -25,7 +25,7 @@ public class BoardDao {
 			String sql = "select a.no, title, b.name, hit, reg_date, a.user_no"
 					   + " from board a, user b "
 					   + " where a.user_no = b.no  "
-					   + " order by g_no desc, o_no asc";
+					   + " order by a.no desc";
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -150,7 +150,7 @@ public class BoardDao {
 		}
 	}
 	
-	public void deleteByUserNo(Integer user_no, Integer no) {
+	public void deleteByUserNo(Integer user_no, Long no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -161,7 +161,7 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, user_no);
-			pstmt.setInt(2, no);
+			pstmt.setLong(2, no);
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {

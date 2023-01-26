@@ -41,8 +41,18 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board">취소</a>
-						<input type="submit" value="등록">
+					
+						<c:choose>
+							<c:when test="${authUser.no == param.user_no }">
+								<a href="${pageContext.request.contextPath }/board">취소</a>
+								<input type="submit" value="등록">
+							</c:when>
+							<c:otherwise>
+								<a href="${pageContext.request.contextPath }/board">잘못된 접근 되돌아가기</a>
+							</c:otherwise>
+						</c:choose>
+					
+						
 					</div>
 				</form>				
 			</div>

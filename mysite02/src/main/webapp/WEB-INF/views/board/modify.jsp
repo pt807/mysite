@@ -36,8 +36,15 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?a=list">취소</a>
-						<input type="submit" value="수정">
+						<c:choose>
+							<c:when test="${authUser.no == param.user_no }">
+								<a href="${pageContext.request.contextPath }/board?a=view&no=${param.no }">취소</a>
+								<input type="submit" value="수정">
+							</c:when>
+							<c:otherwise>
+								<a href="${pageContext.request.contextPath }/board?a=view&no=${param.no }">잘못된 접근 되돌아가기</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</form>				
 			</div>
