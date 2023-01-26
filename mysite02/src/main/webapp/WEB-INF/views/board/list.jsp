@@ -32,13 +32,31 @@
 			
 				<c:set var="count" value="${fn:length(list) }" />
 				<c:forEach items="${list }" var="vo" varStatus="status" >
-					
-							<tr>
+								<tr>
 								<td>[${count - status.index}]</td>
-								<td  style="text-align: left; padding-left: 0px">
-									<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
-									${vo.title }</a>
-								</td>
+									<c:if test="${vo.depth == 0}">	
+										<td style="text-align: left; padding-left: 0px">
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
+											${vo.title }
+										</a>
+										</td>
+									</c:if>
+									<c:if test="${vo.depth == 1}">
+										<td style="text-align: left; padding-left: 15px">
+										<img src="${pageContext.request.contextPath }/assets/images/reply.png">
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
+											${vo.title }
+										</a>
+										</td>
+									</c:if>
+									<c:if test="${vo.depth > 1}">
+										<td style="text-align: left; padding-left: 30px">
+										<img src="${pageContext.request.contextPath }/assets/images/reply.png">
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
+											${vo.title }
+										</a>
+									</c:if>
+						
 								<td>${vo.user_name}</td>
 								<td>${vo.hit}</td>
 								<td>${vo.reg_date}</td>

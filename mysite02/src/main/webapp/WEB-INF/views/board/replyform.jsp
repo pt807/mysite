@@ -17,12 +17,15 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<input type = "hidden" name = "a" value="write">
-					
-					<input type = "hidden" name = "user_no" value= ${param.user_no }>
+					<input type = "hidden" name = "a" value="reply">
+			
+					<input type = "hidden" name = "g_no" value="${vo.g_no}">
+					<input type = "hidden" name = "o_no" value="${vo.o_no}">
+					<input type = "hidden" name = "depth" value="${vo.depth}">
+					<input type = "hidden" name = "user_no" value= ${vo.user_no }>
 					<table class="tbl-ex">
 						<tr>
-							<th colspan="2">글쓰기</th>
+							<th colspan="2">답글 작성</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
@@ -36,18 +39,10 @@
 						</tr>
 					</table>
 					<div class="bottom">
-					
-						<c:choose>
-							<c:when test="${authUser.no == param.user_no }">
-								<a href="${pageContext.request.contextPath }/board">취소</a>
+								<a href="${pageContext.request.contextPath }/board?a=view&no=${param.no }">취소</a>
+								<c:if test="${not empty authUser }">
 								<input type="submit" value="등록">
-							</c:when>
-							<c:otherwise>
-								<a href="${pageContext.request.contextPath }/board">잘못된 접근 되돌아가기</a>
-							</c:otherwise>
-						</c:choose>
-					
-						
+								</c:if >
 					</div>
 				</form>				
 			</div>
