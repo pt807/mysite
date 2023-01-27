@@ -36,7 +36,7 @@
 								<td>[${vo.no }]</td>
 									<c:if test="${vo.depth == 0}">	
 										<td style="text-align: left; padding-left: 0px">
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&pageNum=${pageVo.pageNum }&amount=${pageVo.amount }">
 											${vo.title }
 										</a>
 										</td>
@@ -44,7 +44,7 @@
 									<c:if test="${vo.depth == 1}">
 										<td style="text-align: left; padding-left: 15px">
 										<img src="${pageContext.request.contextPath }/assets/images/reply.png">
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&no=${vo.no }&pageNum=${pageVo.pageNum }&amount=${pageVo.amount }">
 											${vo.title }
 										</a>
 										</td>
@@ -52,7 +52,7 @@
 									<c:if test="${vo.depth > 1}">
 										<td style="text-align: left; padding-left: 30px">
 										<img src="${pageContext.request.contextPath }/assets/images/reply.png">
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&no=${vo.no }&pageNum=${pageVo.pageNum }&amount=${pageVo.amount }">
 											${vo.title }
 										</a>
 									</c:if>
@@ -103,7 +103,7 @@
 				
 				<div class="bottom">
 					<c:if test="${not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board?a=writeform&user_no=${authUser.no }" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board?a=writeform&user_no=${authUser.no }&pageNum=${pageVo.pageNum }&amount=${pageVo.amount }" id="new-book">글쓰기</a>
 					</c:if >
 				
 					
