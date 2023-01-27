@@ -17,7 +17,7 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pageNum = 0;
+		int pageNum = 1;
 		int amount = 10;
 
 		if (request.getParameter("pageNum") != null && request.getParameter("amount") != null) {

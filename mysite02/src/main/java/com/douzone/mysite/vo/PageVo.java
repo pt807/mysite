@@ -8,15 +8,12 @@ public class PageVo {
 	private int pageNum;
 	private int amount;
 	private int total;
+	private int endPageTotal;
 
 	public PageVo(int pageNum, int amount, int total) {
 		this.pageNum = pageNum;
 		this.amount = amount;
 		this.total = total;
-
-		if (this.pageNum == 0) {
-			this.pageNum += 1;
-		}
 
 		// ceil 반올림
 		this.endPage = (int) Math.ceil(this.pageNum * 0.1) * this.amount;
@@ -24,7 +21,7 @@ public class PageVo {
 		this.startPage = this.endPage - this.amount + 1;
 
 		// 전체글 / 화면에 뿌려줄 데이터 개수
-		int endPageTotal = (int) Math.ceil(this.total / (double) this.amount);
+		endPageTotal = (int) Math.ceil(this.total / (double) this.amount);
 
 		if (this.endPage > endPageTotal) {
 			this.endPage = endPageTotal;
@@ -92,10 +89,19 @@ public class PageVo {
 		this.total = total;
 	}
 
+	public int getEndPageTotal() {
+		return endPageTotal;
+	}
+
+	public void setEndPageTotal(int endPageTotal) {
+		this.endPageTotal = endPageTotal;
+	}
+
 	@Override
 	public String toString() {
 		return "PageVo [startPage=" + startPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next
-				+ ", pageNum=" + pageNum + ", amount=" + amount + ", total=" + total + "]";
+				+ ", pageNum=" + pageNum + ", amount=" + amount + ", total=" + total + ", endPageTotal=" + endPageTotal
+				+ "]";
 	}
 
 }

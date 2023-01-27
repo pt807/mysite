@@ -30,10 +30,10 @@
 						<th>&nbsp;</th>
 					</tr>				
 			
-				<c:set var="count" value="${fn:length(list) }" />
+				
 				<c:forEach items="${list }" var="vo" varStatus="status" >
 								<tr>
-								<td>[${count - status.index}]</td>
+								<td>[${vo.no }]</td>
 									<c:if test="${vo.depth == 0}">	
 										<td style="text-align: left; padding-left: 0px">
 										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">
@@ -73,10 +73,14 @@
 				</c:forEach>
 				</table>
 				<!-- pager 추가 -->
-				<div class="pager">
+				<div class="pager"> 
 					<ul>
-						<c:if test="${pageVo.prev }">
-							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.startPage - 1 }&amount=${pageVo.amount }">◀</a></li>
+						<c:if test="${pageVo.pageNum != 1 || pageVo.prev }">
+							<li><a href="${pageContext.request.contextPath }/board?pageNum=1&amount=${pageVo.amount }">«</a></li>
+						</c:if>
+						
+						<c:if test="${pageVo.pageNum != 1 }"> 
+							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.pageNum - 1 }&amount=${pageVo.amount }">◀</a></li>
 						</c:if>
 						
 						<c:forEach var="num" begin="${pageVo.startPage }" end="${pageVo.endPage }">
@@ -86,8 +90,12 @@
 						
 						</c:forEach>
 						
-						<c:if test="${pageVo.next }">
-							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.endPage + 1 }&amount=${pageVo.amount }">▶</a></li>
+						<c:if test="${pageVo.pageNum != pageVo.endPage || pageVo.next}">
+							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.pageNum + 1 }&amount=${pageVo.amount }">▶</a></li>
+						</c:if>
+						
+						<c:if test="${pageVo.pageNum != pageVo.endPage || pageVo.next }">
+							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.endPageTotal }&amount=${pageVo.amount }">»</a></li>
 						</c:if>
 					</ul>
 				</div>					

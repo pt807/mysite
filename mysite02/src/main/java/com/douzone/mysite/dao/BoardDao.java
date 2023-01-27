@@ -27,7 +27,7 @@ public class BoardDao {
 					   + " order by g_no desc, o_no asc, reg_date asc LIMIT ?, ?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, pageNum);
+			pstmt.setInt(1, (pageNum - 1) * amount);
 			pstmt.setInt(2, amount);
 			
 			rs = pstmt.executeQuery();
