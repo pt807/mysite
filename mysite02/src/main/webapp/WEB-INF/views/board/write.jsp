@@ -16,7 +16,7 @@
 
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board?pageNum=${param.pageNum }&amount=${param.amount }">
 					<input type = "hidden" name = "a" value="write">
 					
 					<input type = "hidden" name = "user_no" value= ${param.user_no }>

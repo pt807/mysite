@@ -162,6 +162,35 @@ public class BoardDao {
 		return result;
 	}
 	
+	public void updateHit(Long no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+			
+				String sql = "update board set hit = hit + ? where no = ?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, 1);
+				pstmt.setLong(2, no);
+
+				pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+	
 	public void insert(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -204,7 +233,7 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 
-			String sql = "insert into board values(null, ?, ?, 0 , now(), ?, ?, ?, ?)";
+			String sql = "insert into board values(null, ?, ?, 0 , now(), ?, ? + 1, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getTitle());
@@ -236,20 +265,20 @@ public class BoardDao {
 	public void o_noUpdate1(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			conn = getConnection();
-			
+
 			String sql = "update board"
 					   + " set o_no = o_no + 1"
 					   + " where g_no = ? and o_no > ?";		
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, vo.getG_no());
 			pstmt.setInt(2, vo.getO_no());
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
@@ -266,42 +295,42 @@ public class BoardDao {
 			}
 		}
 	}
-	
-	public void o_noUpdate2(BoardVo vo) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn = getConnection();
-			
-			String sql = "update board"
-					   + " set o_no = o_no + 1"
-					   + " where g_no = ? and depth = ? and o_no >= ?";		
-			
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, vo.getG_no());
-			pstmt.setInt(2, vo.getDepth());
-			pstmt.setInt(3, vo.getO_no());
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
 
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	public void o_noUpdate2(BoardVo vo) {
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//
+//		try {
+//			conn = getConnection();
+//
+//			String sql = "update board"
+//					   + " set o_no = o_no + 1"
+//					   + " where g_no = ? and depth = ? and o_no > ?";		
+//
+//			pstmt = conn.prepareStatement(sql);
+//
+//			pstmt.setInt(1, vo.getG_no());
+//			pstmt.setInt(2, vo.getDepth());
+//			pstmt.setInt(3, vo.getO_no());
+//
+//			pstmt.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			System.out.println("error:" + e);
+//		} finally {
+//			try {
+//				if (pstmt != null) {
+//					pstmt.close();
+//				}
+//
+//				if (conn != null) {
+//					conn.close();
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 	
 	public void deleteByUserNo(Integer user_no, Long no) {
 		Connection conn = null;

@@ -40,28 +40,28 @@ public class ReplyAction implements Action {
 		String suser_no = request.getParameter("user_no");
 		Integer user_no = Integer.parseInt(suser_no);
 
-		if (o_no == 1) {
-			BoardVo vo1 = new BoardVo();
-			vo1.setG_no(g_no);
-			vo1.setO_no(o_no);
-			new BoardDao().o_noUpdate1(vo1);
-		} else {
-			BoardVo vo1 = new BoardVo();
-			vo1.setG_no(g_no);
-			vo1.setO_no(o_no);
-			vo1.setDepth(depth);
-			new BoardDao().o_noUpdate2(vo1);
-		}
+//		if (o_no == 1) {
+//			BoardVo vo1 = new BoardVo();
+//			vo1.setG_no(g_no);
+//			vo1.setO_no(o_no);
+//			new BoardDao().o_noUpdate1(vo1);
+//		} else {
+//			BoardVo vo1 = new BoardVo();
+//			vo1.setG_no(g_no);
+//			vo1.setO_no(o_no);
+//			vo1.setDepth(depth);
+//			new BoardDao().o_noUpdate2(vo1);
+//		}
 
 		// o_no, depth 확인해서 +1
 		BoardVo vo2 = new BoardVo();
 		vo2.setTitle(title);
 		vo2.setContents(content);
 		vo2.setG_no(g_no);
-		vo2.setO_no(o_no + 1);
+		vo2.setO_no(o_no);
 		vo2.setDepth(depth + 1);
 		vo2.setUser_no(user_no);
-
+		new BoardDao().o_noUpdate1(vo2);
 		new BoardDao().insertReply(vo2);
 
 		MvcUtil.redirect(request.getContextPath() + "/board?a=list", request, response);
