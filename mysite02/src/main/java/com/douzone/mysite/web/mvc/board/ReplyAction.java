@@ -39,7 +39,13 @@ public class ReplyAction implements Action {
 
 		String suser_no = request.getParameter("user_no");
 		Integer user_no = Integer.parseInt(suser_no);
+		
+		String spageNo = request.getParameter("pageNum");
+		Integer pageNum = Integer.parseInt(spageNo);
 
+		String samount = request.getParameter("amount");
+		Integer amount = Integer.parseInt(samount);
+		
 //		if (o_no == 1) {
 //			BoardVo vo1 = new BoardVo();
 //			vo1.setG_no(g_no);
@@ -64,7 +70,7 @@ public class ReplyAction implements Action {
 		new BoardDao().o_noUpdate(vo);
 		new BoardDao().insertReply(vo);
 
-		MvcUtil.redirect(request.getContextPath() + "/board?a=list", request, response);
+		MvcUtil.redirect(request.getContextPath() + "/board?pageNum=" + pageNum + "&amount=" + amount, request, response);
 
 	}
 

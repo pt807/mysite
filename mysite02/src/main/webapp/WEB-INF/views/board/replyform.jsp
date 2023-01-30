@@ -18,7 +18,8 @@
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
 					<input type = "hidden" name = "a" value="reply">
-			
+					<input type = "hidden" name = "pageNum" value= ${param.pageNum }>
+					<input type = "hidden" name = "amount" value= ${param.amount }>
 					<input type = "hidden" name = "g_no" value="${vo.g_no}">
 					<input type = "hidden" name = "o_no" value="${vo.o_no}">
 					<input type = "hidden" name = "depth" value="${vo.depth}">

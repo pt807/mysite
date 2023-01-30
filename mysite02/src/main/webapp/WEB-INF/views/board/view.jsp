@@ -35,7 +35,7 @@
 				</table>
 				<div class="bottom">
 					<c:if test="${not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${vo.no }">답글</a>
+						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${vo.no }&pageNum=${param.pageNum }&amount=${param.amount }">답글</a>
 					</c:if>
 						<a href="${pageContext.request.contextPath }/board?pageNum=${param.pageNum }&amount=${param.amount }">글목록</a>
 					<c:if test="${authUser.no == vo.user_no }">
