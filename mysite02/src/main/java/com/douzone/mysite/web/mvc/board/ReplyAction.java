@@ -54,15 +54,15 @@ public class ReplyAction implements Action {
 //		}
 
 		// o_no, depth 확인해서 +1
-		BoardVo vo2 = new BoardVo();
-		vo2.setTitle(title);
-		vo2.setContents(content);
-		vo2.setG_no(g_no);
-		vo2.setO_no(o_no);
-		vo2.setDepth(depth + 1);
-		vo2.setUser_no(user_no);
-		new BoardDao().o_noUpdate1(vo2);
-		new BoardDao().insertReply(vo2);
+		BoardVo vo = new BoardVo();
+		vo.setTitle(title);
+		vo.setContents(content);
+		vo.setG_no(g_no);
+		vo.setO_no(o_no);
+		vo.setDepth(depth + 1);
+		vo.setUser_no(user_no);
+		new BoardDao().o_noUpdate(vo);
+		new BoardDao().insertReply(vo);
 
 		MvcUtil.redirect(request.getContextPath() + "/board?a=list", request, response);
 

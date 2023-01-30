@@ -74,30 +74,31 @@
 				</table>
 				<!-- pager 추가 -->
 				<div class="pager"> 
-					<ul>
-						<c:if test="${pageVo.pageNum != 1 || pageVo.prev }">
-							<li><a href="${pageContext.request.contextPath }/board?pageNum=1&amount=${pageVo.amount }">«</a></li>
-						</c:if>
-						
-						<c:if test="${pageVo.pageNum != 1 }"> 
-							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.pageNum - 1 }&amount=${pageVo.amount }">◀</a></li>
-						</c:if>
-						
-						<c:forEach var="num" begin="${pageVo.startPage }" end="${pageVo.endPage }">
-							<li class='${pageVo.pageNum eq num ? "selected" : "" }'>
-							<a href="${pageContext.request.contextPath }/board?pageNum=${num }&amount=${pageVo.amount }">${num }</a>
-							</li>
-						
-						</c:forEach>
-						
-						<c:if test="${pageVo.pageNum != pageVo.endPage || pageVo.next}">
-							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.pageNum + 1 }&amount=${pageVo.amount }">▶</a></li>
-						</c:if>
-						
-						<c:if test="${pageVo.pageNum != pageVo.endPage || pageVo.next }">
-							<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.endPageTotal }&amount=${pageVo.amount }">»</a></li>
-						</c:if>
-					</ul>
+						<ul>
+							<c:if test="${pageVo.pageNum != 1 || pageVo.prev }">
+								<li><a href="${pageContext.request.contextPath }/board?pageNum=1&amount=${pageVo.amount }">«</a></li>
+							</c:if>
+							
+							<c:if test="${pageVo.pageNum != 1 }"> 
+								<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.pageNum - 1 }&amount=${pageVo.amount }">◀</a></li>
+							</c:if>
+							
+							<c:forEach var="num" begin="${pageVo.startPage }" end="${pageVo.endPage }">
+								<li class='${pageVo.pageNum eq num ? "selected" : "" }'>
+								<a href="${pageContext.request.contextPath }/board?pageNum=${num }&amount=${pageVo.amount }">${num }</a>
+								</li>
+							
+							</c:forEach>
+							
+							<c:if test="${pageVo.pageNum < pageVo.endPage || pageVo.next}">
+								<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.pageNum + 1 }&amount=${pageVo.amount }">▶</a></li>
+							</c:if>
+							
+							<c:if test="${pageVo.pageNum < pageVo.endPage || pageVo.next }">
+								<li><a href="${pageContext.request.contextPath }/board?pageNum=${pageVo.endPageTotal }&amount=${pageVo.amount }">»</a></li>
+							</c:if>
+						</ul>
+					
 				</div>					
 				<!-- pager 추가 -->
 				

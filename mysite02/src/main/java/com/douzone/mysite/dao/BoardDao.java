@@ -262,7 +262,7 @@ public class BoardDao {
 		}
 	}
 	
-	public void o_noUpdate1(BoardVo vo) {
+	public void o_noUpdate(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
