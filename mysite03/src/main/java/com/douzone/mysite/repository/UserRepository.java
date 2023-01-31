@@ -57,7 +57,7 @@ public class UserRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "elect * from user where email = ? and password = password(?)";
+			String sql = "select * from user where email = ? and password = password(?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getEmail());
