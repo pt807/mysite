@@ -60,15 +60,31 @@ public class UserController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
+		// Access Controll
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		UserVo vo = userService.findByno(authUser.getNo());
+		if (authUser == null) {
+			return "redirect:/";
+		}
+		////////////////////////////////////////////////////
+
+		UserVo vo = userService.getUser(authUser.getNo());
 		model.addAttribute("vo", vo);
 		return "user/update";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(HttpSession session, UserVo vo) {
-		userService.update(session, vo);
-		return"redirect:/";
+		// Access Controll
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/";
+		}
+		////////////////////////////////////////////////////
+		
+		vo.setNo(authUser.getNo());
+		userService.updateUser(vo);
+		
+		authUser.setName(vo.getName());
+		return "redirect:/";
 	}
 }

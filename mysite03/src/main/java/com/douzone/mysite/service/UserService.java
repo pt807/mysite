@@ -21,14 +21,13 @@ public class UserService {
 		return userRepository.findbyEmailAndPassword(vo);
 	}
 
-	public UserVo findByno(Long no) {
+	public UserVo getUser(Long no) {
 		return userRepository.findByNo(no);
 	}
 
-	public void update(HttpSession session, UserVo vo) {
+	public void updateUser(UserVo vo) {
 		userRepository.update(vo);
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		authUser.setName(vo.getName());
+		
 	}
 
 }
