@@ -7,6 +7,6 @@
 			<ul>
 				<li><a href="${pageContext.request.contextPath }">박대준</a></li>
 				<li><a href="${pageContext.request.contextPath }/guestbook/list">방명록</a></li>
-				<li><a href="${pageContext.request.contextPath }/board?a=list">게시판</a></li>
+				<li><a href="${pageContext.request.contextPath }/board/">게시판</a></li>
 			</ul>
 		</div>

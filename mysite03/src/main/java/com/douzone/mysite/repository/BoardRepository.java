@@ -15,9 +15,10 @@ public class BoardRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<BoardVo> findAllByPageAndKeyWord(int pageNo, int amount, String keyword) {
+	public List<BoardVo> findAllByPageAndKeyWord(int pageNum, int amount, String keyword) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("pageNo", pageNo);
+		map.put("pageNum", (pageNum - 1) * amount);
+		map.put("amount", amount);
 		map.put("keyword", keyword);
 		
 		return sqlSession.selectList("board.findAllByPageAndKeyWord", map);
@@ -25,6 +26,23 @@ public class BoardRepository {
 
 	public int getTotalCount(String keyword) {
 		return sqlSession.selectOne("board.getTotalCount", keyword);
+	}
+	
+	public BoardVo findByNo(Long no) {
+		return sqlSession.selectOne("board.findByNo", no);
+	}
+
+	public void insert(BoardVo vo) {
+		sqlSession.insert("board.insert", vo);
+	}
+
+	public void update(BoardVo vo) {
+		sqlSession.update("board.update", vo);
+	}
+
+	public void deleteByUserNo(Long no, Long user_no) {
+		Map<String, Object> map = Map.of("no", no, "user_no", user_no);
+		sqlSession.delete("board.deleteByUserNo", map);
 	}
 
 }
