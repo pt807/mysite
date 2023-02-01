@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.GuestbookVo;
@@ -15,6 +18,8 @@ import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
 public class GuestbookRepository {
+	@Autowired
+	private DataSource dataSource;
 	public List<GuestbookVo> findAll() {
 		List<GuestbookVo> result = new ArrayList<>();
 
@@ -23,7 +28,7 @@ public class GuestbookRepository {
 		ResultSet rs = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			String sql = "select no, name, reg_date, message from guestbook order by no desc";
 			pstmt = conn.prepareStatement(sql);
@@ -67,8 +72,8 @@ public class GuestbookRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
-
+			conn = dataSource.getConnection();
+			
 			String sql = "insert into guestbook values(null, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
 
@@ -101,7 +106,7 @@ public class GuestbookRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			String sql = "delete from guestbook where password = ? and no = ?";
 			pstmt = conn.prepareStatement(sql);
@@ -127,17 +132,4 @@ public class GuestbookRepository {
 		}
 	}
 
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://192.168.10.108:3307/webdb?charset=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		}
-
-		return conn;
-	}
 }
