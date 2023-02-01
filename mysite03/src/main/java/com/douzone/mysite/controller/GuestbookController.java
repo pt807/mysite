@@ -27,7 +27,9 @@ public class GuestbookController {
 
 	@RequestMapping("/insert")
 	public String insert(GuestbookVo guestbookVo) {
+		System.out.println(guestbookVo);
 		guestbookService.addMessage(guestbookVo);
+		System.out.println(guestbookVo);
 		return "redirect:/guestbook/list";
 	}
 
