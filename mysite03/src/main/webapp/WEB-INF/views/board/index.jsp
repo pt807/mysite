@@ -16,7 +16,7 @@
 
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board/?pageNum=${pageNum }&amount=${amount }" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board" method="post">
 					<input type="text" id="kwd" name="keyword" value="${keyword }">
 					<input type="submit" value="찾기">
 				</form>
@@ -59,7 +59,7 @@
 						
 								<td>${vo.name}</td>
 								<td>${vo.hit}</td>
-								<td>${vo.reg_date}</td>
+								<td><fmt:formatDate value="${vo.reg_date}" pattern="y:M:d-ah:m:s" type="date"/></td>
 								<c:choose>
 									<c:when test="${authUser.no == vo.user_no }">
 										<td><a href="${pageContext.request.contextPath }/board/delete?user_no=${vo.user_no }&no=${vo.no }&pageNum=${pageNum }&amount=${amount }&keyword=${keyword }" class="del">삭제</a></td>
