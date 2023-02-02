@@ -14,22 +14,29 @@ import com.douzone.mysite.vo.BoardVo;
 public class BoardRepository {
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	public List<BoardVo> findAllByPageAndKeyWord(int pageNum, int amount, String keyword) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("pageNum", (pageNum - 1) * amount);
 		map.put("amount", amount);
 		map.put("keyword", keyword);
-		
+
 		return sqlSession.selectList("board.findAllByPageAndKeyWord", map);
 	}
 
 	public int getTotalCount(String keyword) {
 		return sqlSession.selectOne("board.getTotalCount", keyword);
 	}
-	
+
 	public BoardVo findByNo(Long no) {
 		return sqlSession.selectOne("board.findByNo", no);
+	}
+	
+	public BoardVo findByNoAndUserNo(Long no, Long userNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("userNo", userNo);
+		return sqlSession.selectOne("board.findByNoAndUserNo", map);
 	}
 
 	public void insert(BoardVo vo) {
@@ -44,11 +51,11 @@ public class BoardRepository {
 		Map<String, Object> map = Map.of("no", no, "user_no", user_no);
 		sqlSession.delete("board.deleteByUserNo", map);
 	}
-	
+
 	public void oNoUpdate(BoardVo vo) {
 		sqlSession.update("board.oNoUpdate", vo);
 	}
-	
+
 	public void insertReply(BoardVo vo) {
 		sqlSession.insert("board.insertReply", vo);
 	}

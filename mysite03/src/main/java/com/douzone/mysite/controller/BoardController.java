@@ -78,8 +78,8 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(Model model, @RequestParam("no") Long no) {
-		BoardVo vo = boardService.getContents(no);
+	public String update(Model model, @RequestParam("no") Long no, @RequestParam("user_no") Long userNo) {
+		BoardVo vo = boardService.getContents(no, userNo);
 		model.addAttribute("vo", vo);
 		return "board/modify";
 	}

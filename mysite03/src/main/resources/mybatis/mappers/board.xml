@@ -51,6 +51,14 @@
 		]]>
 	</select>
 	
+	<select id="findByNoAndUserNo" resultType="boardvo" parameterType="map">
+		<![CDATA[
+		select title, contents, a.user_no, a.no, a.g_no, a.o_no, a.depth
+		from board a, user b
+		where a.user_no = b.no and a.no = #{no } and a.user_no = #{userNo}
+		]]>
+	</select>
+	
 	<insert id="insert" parameterType="boardvo">
 		<![CDATA[
 		insert into board

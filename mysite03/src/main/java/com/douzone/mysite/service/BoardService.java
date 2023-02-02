@@ -27,7 +27,7 @@ public class BoardService {
 	}
 
 	public BoardVo getContents(Long no, Long userNo) {
-		return null;
+		return boardRepository.findByNoAndUserNo(no, userNo);
 	}
 
 	public void updateContents(BoardVo vo) {
