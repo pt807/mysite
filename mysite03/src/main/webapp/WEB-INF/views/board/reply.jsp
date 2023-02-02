@@ -16,8 +16,7 @@
 
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<input type = "hidden" name = "a" value="reply">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/reply">
 					<input type = "hidden" name = "pageNum" value= ${param.pageNum }>
 					<input type = "hidden" name = "amount" value= ${param.amount }>
 					<input type = "hidden" name = "g_no" value="${vo.g_no}">
@@ -35,12 +34,12 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-								<a href="${pageContext.request.contextPath }/board?a=view&no=${param.no }">취소</a>
+								<a href="${pageContext.request.contextPath }/board/view?no=${param.no }&pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">취소</a>
 								<c:if test="${not empty authUser }">
 								<input type="submit" value="등록">
 								</c:if >

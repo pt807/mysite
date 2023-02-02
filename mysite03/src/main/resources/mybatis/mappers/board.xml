@@ -61,7 +61,7 @@
 	
 	<update id="update" parameterType="boardvo">
 		<![CDATA[
-		update board set title = #{title }, contents = #{contents} where no = #{no }
+		update board set title = #{title }, contents = #{contents } where no = #{no }
 		]]>
 	</update>
 	
@@ -70,4 +70,26 @@
 		delete from board where user_no = #{user_no } and no = #{no }
 		]]>
 	</delete>
+	
+	<update id="oNoUpdate" parameterType="boardvo">
+		<![CDATA[
+		update board
+		set o_no = o_no + 1
+		where g_no = #{g_no } and o_no > #{o_no }
+		]]>
+	</update>
+	
+	<insert id="insertReply" parameterType="boardvo">
+		<![CDATA[
+		insert into board 
+		values(null, #{title }, #{contents }, 0 , now(), #{g_no }, #{o_no } + 1, #{depth }, #{user_no })
+		]]>
+	</insert>
+	
+	<update id="updateByHit" parameterType="long">
+		<![CDATA[
+		update board set hit = hit + 1 where no = #{no }
+		]]>
+	</update>
+	
 </mapper>

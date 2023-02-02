@@ -37,6 +37,16 @@ public class BoardService {
 	public void deleteContents(Long no, Long userNo) {
 		boardRepository.deleteByUserNo(no, userNo);
 	}
+	
+	public void addReply(BoardVo vo) {
+		vo.setDepth(vo.getDepth() + 1);
+		boardRepository.oNoUpdate(vo);
+		boardRepository.insertReply(vo);
+	}
+	
+	public void updateHit(Long no) {
+		boardRepository.updateByHit(no);
+	}
 
 	public Map<String, Object> getContentsList(int pageNum, int amount, String keyword) {
 		int toTalCount = boardRepository.getTotalCount(keyword);

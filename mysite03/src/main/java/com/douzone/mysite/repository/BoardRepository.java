@@ -44,5 +44,17 @@ public class BoardRepository {
 		Map<String, Object> map = Map.of("no", no, "user_no", user_no);
 		sqlSession.delete("board.deleteByUserNo", map);
 	}
+	
+	public void oNoUpdate(BoardVo vo) {
+		sqlSession.update("board.oNoUpdate", vo);
+	}
+	
+	public void insertReply(BoardVo vo) {
+		sqlSession.insert("board.insertReply", vo);
+	}
+
+	public void updateByHit(Long no) {
+		sqlSession.update("board.updateByHit", no);
+	}
 
 }
