@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.UserVo;
 
 @Controller
 @RequestMapping("/board")
@@ -45,47 +47,65 @@ public class BoardController {
 	}
 
 	@RequestMapping("/view")
-	public String view(@RequestParam("no") Long no, HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+	public String view(@RequestParam("no") Long no, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
 		Cookie oldCookie = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("recruitView")) {
-                    oldCookie = cookie;
-                }
-            }
-        }
-        if (oldCookie != null) {
-            if (!oldCookie.getValue().contains("[" + no.toString() + "]")) {
-                boardService.updateHit(no);
-                oldCookie.setValue(oldCookie.getValue() + "_[" + no + "]");
-                oldCookie.setPath("/");
-                oldCookie.setMaxAge(60 * 60 * 24);
-                response.addCookie(oldCookie);
-            }
-        } else {
-        	 boardService.updateHit(no);
-            Cookie newCookie = new Cookie("recruitView", "[" + no + "]");
-            newCookie.setPath("/");
-            newCookie.setMaxAge(60 * 60 * 24);
-            response.addCookie(newCookie);
-        }
-		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("recruitView")) {
+					oldCookie = cookie;
+				}
+			}
+		}
+		if (oldCookie != null) {
+			if (!oldCookie.getValue().contains("[" + no.toString() + "]")) {
+				boardService.updateHit(no);
+				oldCookie.setValue(oldCookie.getValue() + "_[" + no + "]");
+				oldCookie.setPath("/");
+				oldCookie.setMaxAge(60 * 60 * 24);
+				response.addCookie(oldCookie);
+			}
+		} else {
+			boardService.updateHit(no);
+			Cookie newCookie = new Cookie("recruitView", "[" + no + "]");
+			newCookie.setPath("/");
+			newCookie.setMaxAge(60 * 60 * 24);
+			response.addCookie(newCookie);
+		}
+
 		BoardVo vo = boardService.getContents(no);
 		model.addAttribute("vo", vo);
 		return "board/view";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(Model model, @RequestParam("no") Long no, @RequestParam("user_no") Long userNo) {
+	public String update(HttpSession session, Model model, @RequestParam("no") Long no,
+			@RequestParam("user_no") Long userNo) {
+
+		// Access Controll
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null || authUser.getNo() != userNo) {
+			return "redirect:/board";
+		}
+		////////////////////////////////////////////////////
+
 		BoardVo vo = boardService.getContents(no, userNo);
 		model.addAttribute("vo", vo);
 		return "board/modify";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(BoardVo vo) {
+	public String update(HttpSession session, BoardVo vo) {
+
+		// Access Controll
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null || authUser.getNo() != vo.getUser_no()) {
+			return "redirect:/board";
+		}
+		////////////////////////////////////////////////////
+
 		boardService.updateContents(vo);
 		return "redirect:/board/view?no=" + vo.getNo();
 	}
@@ -103,14 +123,14 @@ public class BoardController {
 		boardService.deleteContents(no, user_no);
 		return "redirect:/board?pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword;
 	}
-	
+
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public String reply(@RequestParam("no") Long no, Model model) {
 		BoardVo vo = boardService.getContents(no);
 		model.addAttribute("vo", vo);
 		return "board/reply";
 	}
-	
+
 	@RequestMapping(value = "/reply", method = RequestMethod.POST)
 	public String reply(BoardVo vo,
 			@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,

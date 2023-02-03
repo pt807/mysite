@@ -18,6 +18,7 @@
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/update">
 					<input type = "hidden" name = "no" value= ${param.no }>
+					<input type = "hidden" name = "no" value= ${param.user_no }>
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>
