@@ -119,7 +119,15 @@ public class BoardController {
 	public String delete(@RequestParam("user_no") Long user_no, @RequestParam("no") Long no,
 			@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
-			@RequestParam(value = "amount", defaultValue = "10", required = false) int amount) {
+			@RequestParam(value = "amount", defaultValue = "10", required = false) int amount, HttpSession session) {
+
+		// Access Controll
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null || authUser.getNo() != user_no) {
+			return "redirect:/board";
+		}
+		////////////////////////////////////////////////////
+
 		boardService.deleteContents(no, user_no);
 		return "redirect:/board?pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword;
 	}
