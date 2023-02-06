@@ -22,7 +22,7 @@
 					<input type = "hidden" name = "g_no" value="${vo.g_no}">
 					<input type = "hidden" name = "o_no" value="${vo.o_no}">
 					<input type = "hidden" name = "depth" value="${vo.depth}">
-					<input type = "hidden" name = "user_no" value= ${vo.user_no }>
+					<input type = "hidden" name = "user_no" value= ${authUser.no }>
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">답글 작성</th>
