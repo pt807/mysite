@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
@@ -42,14 +42,10 @@ public class BoardController {
 		return "board/write";
 	}
 
+	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(HttpSession session, BoardVo vo) {
-		// Access Controll
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null || authUser.getNo() != vo.getUser_no()) {
-			return "redirect:/board";
-		}
-		////////////////////////////////////////////////////
+	public String write(@AuthUser UserVo authUser, BoardVo vo) {
+
 		boardService.addContents(vo);
 		return "redirect:/board";
 	}
@@ -88,58 +84,42 @@ public class BoardController {
 		return "board/view";
 	}
 
+	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(HttpSession session, Model model, @RequestParam("no") Long no,
-			@RequestParam("user_no") Long userNo) {
+	public String update(@AuthUser UserVo authUser, Model model, @RequestParam("no") Long no) {
 
-		// Access Controll
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null || authUser.getNo() != userNo) {
-			return "redirect:/board";
-		}
-		////////////////////////////////////////////////////
-
-		BoardVo vo = boardService.getContents(no, userNo);
+		BoardVo vo = boardService.getContents(no, authUser.getNo());
 		model.addAttribute("vo", vo);
 		return "board/modify";
 	}
 
+	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(HttpSession session, BoardVo vo) {
-
-		// Access Controll
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null || authUser.getNo() != vo.getUser_no()) {
-			return "redirect:/board";
-		}
-		////////////////////////////////////////////////////
+	public String update(@AuthUser UserVo authUser, BoardVo vo) {
 
 		boardService.updateContents(vo);
 		return "redirect:/board/view?no=" + vo.getNo();
 	}
 
+	@Auth
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete() {
 		return "board/delete";
 	}
 
+	@Auth
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@RequestParam("user_no") Long user_no, @RequestParam("no") Long no,
+	public String delete(@RequestParam("no") Long no,
 			@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
-			@RequestParam(value = "amount", defaultValue = "10", required = false) int amount, HttpSession session) {
+			@RequestParam(value = "amount", defaultValue = "10", required = false) int amount,
+			@AuthUser UserVo authUser) {
 
-		// Access Controll
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null || authUser.getNo() != user_no) {
-			return "redirect:/board";
-		}
-		////////////////////////////////////////////////////
-
-		boardService.deleteContents(no, user_no);
+		boardService.deleteContents(no, authUser.getNo());
 		return "redirect:/board?pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword;
 	}
 
+	@Auth
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public String reply(@RequestParam("no") Long no, Model model) {
 		BoardVo vo = boardService.getContents(no);
@@ -147,6 +127,7 @@ public class BoardController {
 		return "board/reply";
 	}
 
+	@Auth
 	@RequestMapping(value = "/reply", method = RequestMethod.POST)
 	public String reply(BoardVo vo,
 			@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,

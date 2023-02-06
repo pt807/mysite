@@ -39,7 +39,7 @@
 					</c:if>
 						<a href="${pageContext.request.contextPath }/board?pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">글목록</a>
 					<c:if test="${authUser.no == vo.user_no }">
-						<a href="${pageContext.request.contextPath }/board/update?no=${vo.no }&user_no=${authUser.no }&pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">글수정</a>
+						<a href="${pageContext.request.contextPath }/board/update?no=${vo.no }&pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">글수정</a>
 					</c:if>
 				</div>
 			</div>

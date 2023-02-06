@@ -21,17 +21,8 @@
 					<input type='hidden' name="no" value='${param.no }'>
 					<label>삭제하시겠습니까?</label>
 					<div class="bottom" style="margin-top: 50px; text-align-last: center;">
-						<c:choose>
-							<c:when test="${authUser.no == param.user_no }">
-								<input type="submit" value="확인">
-								<a href="${pageContext.request.contextPath }/board?pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">게시판 리스트</a>
-							</c:when>
-							<c:otherwise>
-								<a href="${pageContext.request.contextPath }/board" style="inline-size: -webkit-fill-available;">
-									잘못된 접근 되돌아가기
-								</a>
-							</c:otherwise>
-						</c:choose>
+						<input type="submit" value="확인">
+						<a href="${pageContext.request.contextPath }/board?pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">게시판 리스트</a>
 					</div>
 				</form>
 			</div>

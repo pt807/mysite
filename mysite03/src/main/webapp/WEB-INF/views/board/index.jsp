@@ -62,7 +62,7 @@
 								<td><fmt:formatDate value="${vo.reg_date}" pattern="y:M:d-ah:m:s" type="date"/></td>
 								<c:choose>
 									<c:when test="${authUser.no == vo.user_no }">
-										<td><a href="${pageContext.request.contextPath }/board/delete?user_no=${vo.user_no }&no=${vo.no }&pageNum=${pageNum }&amount=${amount }&keyword=${keyword }" class="del">삭제</a></td>
+										<td><a href="${pageContext.request.contextPath }/board/delete?no=${vo.no }&pageNum=${pageNum }&amount=${amount }&keyword=${keyword }" class="del">삭제</a></td>
 									</c:when>
 									<c:otherwise>
 										<td></td>
@@ -104,7 +104,7 @@
 				
 				<div class="bottom">
 					<c:if test="${not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board/write?user_no=${authUser.no }&pageNum=${pageNum }&amount=${amount }&keyword=${keyword }" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board/write?pageNum=${pageNum }&amount=${amount }&keyword=${keyword }" id="new-book">글쓰기</a>
 					</c:if >
 				
 					

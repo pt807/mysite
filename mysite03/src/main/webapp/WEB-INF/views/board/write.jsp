@@ -17,7 +17,7 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/write">
-					<input type = "hidden" name = "user_no" value= ${param.user_no }>
+					<input type = "hidden" name = "user_no" value= ${authUser.no }>
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -34,18 +34,8 @@
 						</tr>
 					</table>
 					<div class="bottom">
-					
-						<c:choose>
-							<c:when test="${authUser.no == param.user_no }">
 								<a href="${pageContext.request.contextPath }/board?pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">취소</a>
 								<input type="submit" value="등록">
-							</c:when>
-							<c:otherwise>
-								<a href="${pageContext.request.contextPath }/board">잘못된 접근 되돌아가기</a>
-							</c:otherwise>
-						</c:choose>
-					
-						
 					</div>
 				</form>				
 			</div>
