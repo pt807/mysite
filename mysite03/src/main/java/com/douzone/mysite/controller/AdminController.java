@@ -9,7 +9,7 @@ import com.douzone.mysite.security.Auth;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
+
 	@RequestMapping("")
 	public String main() {
 		return "admin/main";

@@ -13,19 +13,19 @@ public class MainController {
 	public String index() {
 		return "main/index";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/msg01")
 	public String message01() {
 		return "Hello World";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/msg02")
 	public String message02(String name) {
 		return "안녕 세상 :" + name;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/msg03")
 	public Object message03() {
