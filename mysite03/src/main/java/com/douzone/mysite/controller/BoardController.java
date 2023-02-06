@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
@@ -35,13 +36,20 @@ public class BoardController {
 		return "board/index";
 	}
 
+	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write() {
 		return "board/write";
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(BoardVo vo) {
+	public String write(HttpSession session, BoardVo vo) {
+		// Access Controll
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null || authUser.getNo() != vo.getUser_no()) {
+			return "redirect:/board";
+		}
+		////////////////////////////////////////////////////
 		boardService.addContents(vo);
 		return "redirect:/board";
 	}
