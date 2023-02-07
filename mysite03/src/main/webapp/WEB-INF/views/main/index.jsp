@@ -19,10 +19,10 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<img id="profile" src="${pageContext.request.contextPath }${site.profile }" style="width: 100px">
-					<h2>${site.welcome }</h2>
+					<img id="profile" src="${pageContext.request.contextPath }${siteVo.profile }" style="width: 100px">
+					<h2>${siteVo.welcome }</h2>
 					<p>
-						${fn:replace(site.description, newline, "<br>") }
+						${fn:replace(siteVo.description, newline, "<br>") }
 						<br><br>
 						<a href="${pageContext.request.contextPath }/guestbook/list">방명록</a>에 글 남기기<br>
 					</p>

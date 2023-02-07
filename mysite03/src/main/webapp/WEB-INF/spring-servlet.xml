@@ -18,7 +18,8 @@
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
 
-	<!-- validator, conversionService, messageConverter, argumentResolver를 자동으로 등록 -->
+	<!-- validator, conversionService, messageConverter, argumentResolver를 자동으로 
+		등록 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean
@@ -40,7 +41,8 @@
 
 		</mvc:message-converters>
 		<mvc:argument-resolvers>
-			<bean class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+			<bean
+				class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
@@ -56,6 +58,10 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/user/logout" />
 			<bean class="com.douzone.mysite.security.LogoutInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/" />
+			<bean class="com.douzone.mysite.security.AdminMainInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
@@ -97,9 +103,10 @@
 		<!-- defaultEncoding -->
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
-	
+
 	<!-- mvc url-resource mapping -->
-	<mvc:resources mapping="/assets/upload-images/**" location="file:/mysite-uploads/" />	
+	<mvc:resources mapping="/assets/upload-images/**"
+		location="file:/mysite-uploads/" />
 
 	<context:annotation-config />
 	<context:component-scan
