@@ -33,7 +33,9 @@ public class AdminController {
 	@RequestMapping("/main/update")
 	public String update(SiteVo vo, @RequestParam("file") MultipartFile file) {
 		String url = fileuploadService.restore(file);
-		vo.setProfile(url);
+		if (url != null) {
+			vo.setProfile(url);
+		}
 		siteService.updateSite(vo);
 		return "redirect:/admin";
 	}
