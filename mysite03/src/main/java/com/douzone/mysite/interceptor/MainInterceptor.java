@@ -1,4 +1,4 @@
-package com.douzone.mysite.security;
+package com.douzone.mysite.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,15 +9,15 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.douzone.mysite.service.SiteService;
 import com.douzone.mysite.vo.SiteVo;
 
-public class AdminMainInterceptor implements HandlerInterceptor {
+public class MainInterceptor implements HandlerInterceptor {
 	@Autowired
 	private SiteService siteService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		SiteVo vo = siteService.getSite();
-		request.getServletContext().setAttribute("siteVo", vo);
+		SiteVo siteVo = siteService.getSite();
+		request.getServletContext().setAttribute("siteVo", siteVo);
 		request.getRequestDispatcher("/WEB-INF/views/main/index.jsp").forward(request, response);
 		return false;
 	}

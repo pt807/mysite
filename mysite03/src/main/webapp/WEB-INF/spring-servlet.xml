@@ -61,7 +61,7 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/" />
-			<bean class="com.douzone.mysite.security.AdminMainInterceptor" />
+			<bean class="com.douzone.mysite.interceptor.AdminMainInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
