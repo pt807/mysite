@@ -1,6 +1,10 @@
 package com.douzone.mysite.controller;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +16,8 @@ import com.douzone.mysite.service.FileuploadService;
 import com.douzone.mysite.service.SiteService;
 import com.douzone.mysite.vo.SiteVo;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
+
 @Auth(role = "ADMIN")
 @Controller
 @RequestMapping("/admin")
@@ -22,6 +28,12 @@ public class AdminController {
 	@Autowired
 	private FileuploadService fileuploadService;
 
+	@Autowired
+	private ApplicationContext applicationContext;
+	
+	@Autowired
+	private ServletContext servletContext;
+	
 	@RequestMapping("")
 	public String main(Model model) {
 		SiteVo vo = siteService.getSite();
@@ -36,7 +48,16 @@ public class AdminController {
 		if (url != null) {
 			vo.setProfile(url);
 		}
+		
+		SiteVo site = applicationContext.getBean(SiteVo.class);
+		
 		siteService.updateSite(vo);
+		servletContext.setAttribute("sitevo", vo);
+//		site.setTitle(vo.getTitle());
+//		site.setWelcome(vo.getWelcome());
+//		site.setProfile(vo.getProfile());
+//		site.setDescription(vo.getDescription());
+		BeanUtils.copyProperties(vo, site);
 		return "redirect:/admin";
 	}
 
