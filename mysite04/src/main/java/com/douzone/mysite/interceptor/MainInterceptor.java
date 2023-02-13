@@ -16,10 +16,14 @@ public class MainInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		SiteVo siteVo = siteService.getSite();
-		request.getServletContext().setAttribute("siteVo", siteVo);
-		request.getRequestDispatcher("/WEB-INF/views/main/index.jsp").forward(request, response);
-		return false;
+		SiteVo siteVo = (SiteVo)request.getServletContext().getAttribute("sitevo");
+//		SiteVo siteVo = siteService.getSite();
+		if(siteVo == null) {
+			siteVo = siteService.getSite();
+			request.getServletContext().setAttribute("sitevo", siteVo);
+		}
+//		request.getServletContext().setAttribute("siteVo", siteVo);
+//		request.getRequestDispatcher("/WEB-INF/views/main/index.jsp").forward(request, response);
+		return true;
 	}
-
 }

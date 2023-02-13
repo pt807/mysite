@@ -8,15 +8,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.FileuploadService;
 import com.douzone.mysite.service.SiteService;
 import com.douzone.mysite.vo.SiteVo;
-
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 
 @Auth(role = "ADMIN")
 @Controller
@@ -43,10 +40,10 @@ public class AdminController {
 	}
 
 	@RequestMapping("/main/update")
-	public String update(SiteVo vo, @RequestParam("file") MultipartFile file) {
-		String url = fileuploadService.restore(file);
-		if (url != null) {
-			vo.setProfile(url);
+	public String update(SiteVo vo, MultipartFile file) {
+		String profile = fileuploadService.restore(file);
+		if(profile != null) {
+			vo.setProfile(profile);
 		}
 		
 		SiteVo site = applicationContext.getBean(SiteVo.class);
@@ -58,6 +55,7 @@ public class AdminController {
 //		site.setProfile(vo.getProfile());
 //		site.setDescription(vo.getDescription());
 		BeanUtils.copyProperties(vo, site);
+		
 		return "redirect:/admin";
 	}
 

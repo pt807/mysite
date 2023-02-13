@@ -61,10 +61,6 @@ public class SecurityConfig implements WebMvcConfigurer {
 			.addPathPatterns("/user/logout");
 		
 		registry
-			.addInterceptor(mainInterceptor())
-			.addPathPatterns("/");
-		
-		registry
 			.addInterceptor(authInterceptor())
 			.addPathPatterns("/**")
 			.excludePathPatterns("/user/auth")
