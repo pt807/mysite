@@ -9,6 +9,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.douzone.mysite.config.web.FileuploadConfig;
+import com.douzone.mysite.config.web.MessageResourceConfig;
+import com.douzone.mysite.config.web.MvcConfig;
 import com.douzone.mysite.config.web.SecurityConfig;
 import com.douzone.mysite.event.ApplicationContextEventListener;
 import com.douzone.mysite.interceptor.MainInterceptor;
@@ -16,7 +19,7 @@ import com.douzone.mysite.interceptor.MainInterceptor;
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan({ "com.douzone.mysite.controller" })
-@Import({ WebConfig.class, SecurityConfig.class })
+@Import({ MvcConfig.class, SecurityConfig.class, MessageResourceConfig.class, FileuploadConfig.class})
 public class WebConfig implements WebMvcConfigurer {
 
 	// Site Inteceptor
@@ -27,7 +30,9 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(mainInterceptor()).addPathPatterns("/**");
+		registry
+			.addInterceptor(mainInterceptor())
+			.addPathPatterns("/**");
 	}
 
 	// ApplicationContextEventListener
