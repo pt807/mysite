@@ -9,7 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.douzone.mysite.interceptor.MainInterceptor;
+import com.douzone.mysite.interceptor.SiteInterceptor;
 import com.douzone.mysite.security.AuthInterceptor;
 import com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver;
 import com.douzone.mysite.security.LoginInterceptor;
@@ -17,58 +17,55 @@ import com.douzone.mysite.security.LogoutInterceptor;
 
 @SpringBootConfiguration
 public class WebConfig implements WebMvcConfigurer {
+	// Argument Resolver
+	@Bean
+	public HandlerMethodArgumentResolver handlerMethodArgumentResolver() {
+		return new AuthUserHandlerMethodArgumentResolver();
+	}
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+		resolvers.add(handlerMethodArgumentResolver());
+	}
 
-		// Argument Resolver
-		@Bean
-		public HandlerMethodArgumentResolver handlerMethodArgumentResolver() {
-			return new AuthUserHandlerMethodArgumentResolver();
-		}
+	// Site Inteceptor
+	@Bean
+	public HandlerInterceptor siteInterceptor() {
+		return new SiteInterceptor();
+	}
 
-		@Override
-		public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-			resolvers.add(handlerMethodArgumentResolver());
-		}
+	// Security Interceptors
+	@Bean
+	public HandlerInterceptor loginInterceptor() {
+		return new LoginInterceptor();
+	}
 
-		@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-			registry
-				.addInterceptor(mainInterceptor())
-				.addPathPatterns("/**");
-			registry
+	@Bean
+	public HandlerInterceptor logoutInterceptor() {
+		return new LogoutInterceptor();
+	}
+
+	@Bean
+	public HandlerInterceptor authInterceptor() {
+		return new AuthInterceptor();
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry
 			.addInterceptor(loginInterceptor())
 			.addPathPatterns("/user/auth");
 		
 		registry
 			.addInterceptor(logoutInterceptor())
 			.addPathPatterns("/user/logout");
-		
+
 		registry
 			.addInterceptor(authInterceptor())
 			.addPathPatterns("/**")
 			.excludePathPatterns("/user/auth", "/user/logout", "/assets/**");
-		}
 
-
-		// Site Inteceptor
-		@Bean
-		public HandlerInterceptor mainInterceptor() {
-			return new MainInterceptor();
-		}
-		
-		// Security Interceptors
-		@Bean
-		public HandlerInterceptor loginInterceptor() {
-			return new LoginInterceptor();
-		}
-
-		@Bean
-		public HandlerInterceptor logoutInterceptor() {
-			return new LogoutInterceptor();
-		}
-
-		@Bean
-		public HandlerInterceptor authInterceptor() {
-			return new AuthInterceptor();
-		}
-
+		registry
+			.addInterceptor(siteInterceptor())
+			.addPathPatterns("/**");
+	}
 }

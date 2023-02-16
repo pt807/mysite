@@ -9,13 +9,13 @@ import com.douzone.mysite.vo.SiteVo;
 @Service
 public class SiteService {
 	@Autowired
-	private SiteRepository siteRepository;
+	private SiteRepository sietRepository;
 
 	public SiteVo getSite() {
-		return siteRepository.find();
+		return sietRepository.find();
 	}
-
+	
 	public void updateSite(SiteVo vo) {
-		siteRepository.update(vo);
+		sietRepository.update(vo);
 	}
 }

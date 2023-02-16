@@ -13,7 +13,7 @@ import com.douzone.mysite.vo.UserVo;
 public class UserRepository {
 	@Autowired
 	private SqlSession sqlSession;
-
+	
 	public void insert(UserVo vo) {
 		sqlSession.insert("user.insert", vo);
 	}
@@ -22,9 +22,9 @@ public class UserRepository {
 		Map<String, Object> map = new HashMap<>();
 		map.put("e", email);
 		map.put("p", password);
+		
 		return sqlSession.selectOne("user.findByEmailAndPassword", map);
-		// return sqlSession.selectOne("user.findByEmailAndPassword", vo);
-	}
+	}	
 
 	public UserVo findByNo(Long no) {
 		return sqlSession.selectOne("user.findByNo", no);
@@ -32,7 +32,5 @@ public class UserRepository {
 
 	public void update(UserVo vo) {
 		sqlSession.update("user.update", vo);
-
 	}
-
 }

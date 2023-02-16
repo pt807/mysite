@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
-public class LoginInterceptor implements HandlerInterceptor{
+public class LoginInterceptor implements HandlerInterceptor {
 	@Autowired
 	private UserService userService;
 	

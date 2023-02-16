@@ -12,40 +12,29 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-	private static final Log Logger = LogFactory.getLog(GlobalExceptionHandler.class);
-
+	
+	private static final Log logger = LogFactory.getLog(GlobalExceptionHandler.class); 
+			
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handlerException(Exception e) {
-		// 1. 404 Error 처리
-		if (e instanceof NoHandlerFoundException) {
+		//1. 404 Error 처리
+		if(e instanceof NoHandlerFoundException) {
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("error/404");
-
+			
 			return mav;
 		}
-
-		// 2. 로깅(Logging)
+		
+		//2. 로깅(Logging)
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
-		Logger.error(errors.toString());
-
-		// 3. 사과페이지( 3.정상종료)
+		logger.error(errors.toString());
+		
+		//3. 사과페이지( 3.정상종료)
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("exception", errors.toString());
 		mav.setViewName("error/exception");
-
+		
 		return mav;
 	}
-
-//	@ExceptionHandler(NoHandlerFoundException.class)
-//	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-//	public String handle404(NoHandlerFoundException e, Model model) {
-//		StringWriter errors = new StringWriter();
-//		e.printStackTrace(new PrintWriter(errors));
-//
-//		Logger.error(errors.toString());
-//
-//		return "error/404";
-//	}
 }

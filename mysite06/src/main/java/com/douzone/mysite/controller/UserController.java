@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.UserService;
@@ -20,21 +19,22 @@ import com.douzone.mysite.vo.UserVo;
 public class UserController {
 	@Autowired
 	private UserService userService;
-
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join(UserVo vo) {
+	
+	@RequestMapping(value="/join", method=RequestMethod.GET)
+	public String join(@ModelAttribute UserVo vo) {
 		return "user/join";
 	}
 
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
-
-		if (result.hasErrors()) {
-//			List<ObjectError> list = result.getAllErrors();
-//			for(ObjectError err : list) {
-//				System.out.println(err);
-//			}
+		if(result.hasErrors()) {
+			// List<ObjectError> list = result.getAllErrors();
+			// for(ObjectError error : list) {
+			//	System.out.println(error);
+			//}
+			
 			// model.addAttribute("userVo", vo);
+			
 			model.addAllAttributes(result.getModel());
 			return "user/join";
 		}
@@ -42,44 +42,42 @@ public class UserController {
 		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
-
+	
 	@RequestMapping("/joinsuccess")
-	public String joinsuccess() {
+	public String joinSuccess() {
 		return "user/joinsuccess";
 	}
 
-	@RequestMapping(value = "/login")
+	@RequestMapping("/login")
 	public String login() {
 		return "user/login";
 	}
-
+	
 	@Auth
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(@AuthUser UserVo authUser, Model model) {
-
-		UserVo vo = userService.getUser(authUser.getNo());
-		model.addAttribute("vo", vo);
+		UserVo userVo = userService.getUser(authUser.getNo());
+		
+		model.addAttribute("userVo", userVo);
 		return "user/update";
 	}
 
 	@Auth
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo vo) {
-
 		vo.setNo(authUser.getNo());
 		userService.updateUser(vo);
-
+		
 		authUser.setName(vo.getName());
-		return "redirect:/";
+		
+		return "redirect:/user/update";
 	}
-	
-	@RequestMapping("auth")
+
+	@RequestMapping("/auth")
 	public void auth() {
-		
 	}
 	
-	@RequestMapping("logout")
+	@RequestMapping("/logout")
 	public void logout() {
-		
 	}
 }

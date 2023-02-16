@@ -5,7 +5,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 import com.douzone.mysite.MySiteApplication;
 
-public class Bootinitializer extends SpringBootServletInitializer {
+public class BootInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {

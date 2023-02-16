@@ -15,10 +15,13 @@ import com.douzone.mysite.service.FileuploadService;
 import com.douzone.mysite.service.SiteService;
 import com.douzone.mysite.vo.SiteVo;
 
-@Auth(role = "ADMIN")
+@Auth(role="ADMIN")
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	@Autowired
+	private ServletContext servletContext;
+	
 	@Autowired
 	private SiteService siteService;
 
@@ -28,14 +31,10 @@ public class AdminController {
 	@Autowired
 	private ApplicationContext applicationContext;
 	
-	@Autowired
-	private ServletContext servletContext;
-	
 	@RequestMapping("")
 	public String main(Model model) {
 		SiteVo vo = siteService.getSite();
 		model.addAttribute("siteVo", vo);
-//		request.getServletContext().setAttribute("siteVo", vo);
 		return "admin/main";
 	}
 
@@ -58,7 +57,7 @@ public class AdminController {
 		
 		return "redirect:/admin";
 	}
-
+	
 	@RequestMapping("/guestbook")
 	public String guestbook() {
 		return "admin/guestbook";
@@ -68,7 +67,7 @@ public class AdminController {
 	public String board() {
 		return "admin/board";
 	}
-
+	
 	@RequestMapping("/user")
 	public String user() {
 		return "admin/user";
