@@ -16,13 +16,15 @@
 
 		<div id="content">
 			<div id="guestbook" class="delete-form">
-				<form method="post" action="${pageContext.request.contextPath }/guestbook/delete">
-					<input type='hidden' name="no" value='${no }'>
-					<label>비밀번호</label>
-					<input type="password" name="password">
-					<input type="submit" value="확인">
+				<form method="post" action="${pageContext.request.contextPath }/board/delete?pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">
+					<input type='hidden' name="user_no" value='${param.user_no }'>
+					<input type='hidden' name="no" value='${param.no }'>
+					<label>삭제하시겠습니까?</label>
+					<div class="bottom" style="margin-top: 50px; text-align-last: center;">
+						<input type="submit" value="확인">
+						<a href="${pageContext.request.contextPath }/board?pageNum=${param.pageNum }&amount=${param.amount }&keyword=${param.keyword}">게시판 리스트</a>
+					</div>
 				</form>
-				<a href="${pageContext.request.contextPath }/guestbook/list">방명록 리스트</a>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>

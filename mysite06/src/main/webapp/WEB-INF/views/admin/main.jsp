@@ -16,6 +16,7 @@
 			<div id="content">
 				<div id="site-form">
 					<form method="post" action="${pageContext.request.contextPath }/admin/main/update" enctype="multipart/form-data">
+						
 						<label class="block-label" for="title">사이트 타이틀</label>
 						<input type="hidden" name="profile" value="${siteVo.profile }" />
 						<input id="title" name="title" type="text" value="${siteVo.title }">
@@ -24,7 +25,7 @@
 						<input id="welcomeMessage" name="welcome" type="text" value="${siteVo.welcome }">
 
 						<label class="block-label">프로필 이미지</label>
-						<img style="width:100px" id="profile" src="${pageContext.request.contextPath }${siteVo.profile }">
+						<img style="width: 100px" id="profile" src="${pageContext.request.contextPath }${siteVo.profile }">
 						<input type="file" name="file">
 
 						<label class="block-label">사이트 설명</label>
@@ -32,9 +33,7 @@
 						
 						<input type="submit" value="변경" />
 					</form>
-									
 				
-
 				</div>
 			</div>
 			<c:import url="/WEB-INF/views/admin/include/navigation.jsp">

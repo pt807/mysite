@@ -9,7 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.douzone.mysite.interceptor.SiteInterceptor;
+import com.douzone.mysite.interceptor.MainInterceptor;
 import com.douzone.mysite.security.AuthInterceptor;
 import com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver;
 import com.douzone.mysite.security.LoginInterceptor;
@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
 	// Site Inteceptor
 	@Bean
 	public HandlerInterceptor siteInterceptor() {
-		return new SiteInterceptor();
+		return new MainInterceptor();
 	}
 
 	// Security Interceptors

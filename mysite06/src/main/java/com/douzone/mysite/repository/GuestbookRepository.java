@@ -13,17 +13,18 @@ import com.douzone.mysite.vo.GuestbookVo;
 public class GuestbookRepository {
 	@Autowired
 	private SqlSession sqlSession;
-	
-	public void deleteByNoAndPassword(Long no, String password) {
-		Map<String, Object> map = Map.of("no", no, "password", password);
-		sqlSession.delete("guestbook.deleteByNoAndPassword", map);
-	}
-	
+
 	public void insert(GuestbookVo vo) {
 		sqlSession.insert("guestbook.insert", vo);
 	}
-	
+
+	public void deleteByPassword(String password, Long no) {
+		Map<String, Object> map = Map.of("no", no, "password", password);
+		sqlSession.delete("guestbook.deleteByPassword", map);
+	}
+
 	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll");
 	}
+
 }

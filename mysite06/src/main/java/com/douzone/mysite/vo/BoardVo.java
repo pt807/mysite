@@ -4,77 +4,99 @@ public class BoardVo {
 	private Long no;
 	private String title;
 	private String contents;
-	private String regDate;
-	private Integer hit;
-	private Integer groupNo;
-	private Integer orderNo;
-	private Integer depth;
-	private Long userNo;
-	private String userName;
+	private int hit;
+	private String reg_date;
+	private int g_no;
+	private int o_no;
+	private int depth;
+	private int user_no;
+	private String user_name;
+
 	public Long getNo() {
 		return no;
 	}
+
 	public void setNo(Long no) {
 		this.no = no;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getContents() {
 		return contents;
 	}
+
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getRegDate() {
-		return regDate;
-	}
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
-	}
-	public Integer getHit() {
+
+	public int getHit() {
 		return hit;
 	}
-	public void setHit(Integer hit) {
+
+	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public Integer getGroupNo() {
-		return groupNo;
+
+	public String getReg_date() {
+		return reg_date;
 	}
-	public void setGroupNo(Integer groupNo) {
-		this.groupNo = groupNo;
+
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
 	}
-	public Integer getOrderNo() {
-		return orderNo;
+
+	public int getG_no() {
+		return g_no;
 	}
-	public void setOrderNo(Integer orderNo) {
-		this.orderNo = orderNo;
+
+	public void setG_no(int g_no) {
+		this.g_no = g_no;
 	}
-	public Integer getDepth() {
+
+	public int getO_no() {
+		return o_no;
+	}
+
+	public void setO_no(int o_no) {
+		this.o_no = o_no;
+	}
+
+	public int getDepth() {
 		return depth;
 	}
-	public void setDepth(Integer depth) {
+
+	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	public Long getUserNo() {
-		return userNo;
+
+	public int getUser_no() {
+		return user_no;
 	}
-	public void setUserNo(Long userNo) {
-		this.userNo = userNo;
+
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
 	}
-	public String getUserName() {
-		return userName;
+
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
+
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate + ", hit="
-				+ hit + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
-				+ ", userName=" + userName + "]";
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", reg_date="
+				+ reg_date + ", g_no=" + g_no + ", o_no=" + o_no + ", depth=" + depth + ", user_no=" + user_no
+				+ ", user_name=" + user_name + "]";
 	}
+
 }
