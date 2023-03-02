@@ -160,7 +160,7 @@
 
 					<fieldset>
 						<legend>성별</legend>
-						<form:radiobutton path="gender" value="female" label="여" />
+						<form:radiobutton path="gender" value="female" label="여" checked="checked"/>
 						<form:radiobutton path="gender" value="male" label="남" />
 					</fieldset>
 
@@ -175,9 +175,8 @@
 				</form:form>
 			</div>
 		</div>
-		<div id="dialog-message" title="" style="display: none">
-  				<p style="line-height: 60px">	
-  				</p>
+		<div id="dialog-message" title="" style="display:none">
+	  		<p style="line-height:60px"></p>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
 		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
