@@ -1,7 +1,11 @@
 package com.douzone.mysite.exception;
 
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -9,24 +13,43 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.douzone.mysite.dto.JsonResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
+
 	private static final Log Logger = LogFactory.getLog(GlobalExceptionHandler.class);
+
 	@ExceptionHandler(Exception.class)
-	public ModelAndView handlerException(Exception e) {
+	public void handlerException(HttpServletRequest request, HttpServletResponse response, Exception e)
+			throws Exception {
 		// 1. 로깅(Logging)
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
 
 		Logger.error(errors.toString());
 
-		// 2. 사과페이지( 3.정상종료)
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("exception", errors.toString());
-		mav.setViewName("error/exception");
+		// 3. 요청 구분
+		// json 요청: request header의 Accept에 application/json(o)
+		// html 요청: request header의 Accept에 application/json(x)
+		String accept = request.getHeader("accept");
+		if (accept.matches(".*application/json.*")) {
+			// 3. json 응답
+			JsonResult jsonResult = JsonResult.fail(errors.toString());
 
-		return mav;
+			String jsonString = new ObjectMapper().writeValueAsString(jsonResult);
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.setContentType("application/json; charset=utf-8");
+			OutputStream os = response.getOutputStream();
+			os.write(jsonString.getBytes("utf-8"));
+			os.close();
+		} else {
+			// 3. 사과페이지( 3.정상종료)
+			request.setAttribute("exception", errors.toString());
+			request
+				.getRequestDispatcher("/WEB-INF/views/error/exception.jsp")
+				.forward(request, response);
+		}
 	}
 }
