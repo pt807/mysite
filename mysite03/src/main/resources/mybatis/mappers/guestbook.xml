@@ -17,6 +17,30 @@
 		]]>
 	</select>
 	
+	<select id="findAllNo" parameterType="long" resultMap="findAllList">
+		<choose>
+			<when test="no == 0">
+				<![CDATA[ 
+			 	select no, name, message
+				from guestbook
+				order by no desc
+   				limit 0, 8
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[ 
+			 	select no, name, message
+				from guestbook
+				where no < #{no }
+				order by no desc
+   				limit 0, 5
+				]]>
+			</otherwise>
+		</choose>
+		
+		
+	</select>
+	
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
 		insert

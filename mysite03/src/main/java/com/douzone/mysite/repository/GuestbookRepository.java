@@ -18,13 +18,16 @@ public class GuestbookRepository {
 		sqlSession.insert("guestbook.insert", vo);
 	}
 
-	public void deleteByPassword(String password, Long no) {
+	public int deleteByPassword(String password, Long no) {
 		Map<String, Object> map = Map.of("no", no, "password", password);
-		sqlSession.delete("guestbook.deleteByPassword", map);
+		return sqlSession.delete("guestbook.deleteByPassword", map);
 	}
 
 	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll");
 	}
 
+	public List<GuestbookVo> findAll(Long no) {
+		return sqlSession.selectList("guestbook.findAllNo", no);
+	}
 }
