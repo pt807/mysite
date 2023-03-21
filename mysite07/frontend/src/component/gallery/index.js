@@ -1,20 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import MySiteLayout from "../../layout/MySiteLayout";
 import Header from "./Header";
 import ImageList from "./ImageList";
-import styles from '../../assets/scss/component/gallery/Galery.scss';
+import styles from "../../assets/scss/component/gallery/Galery.scss";
 
 export default function Index() {
     const [imageList, setImageList] = useState([]);
 
-    useEffect(async () => {
+    const fetchList = async () => {
         try {
-            const response = await fetch('/api/gallery', {
-                method: 'get',
+            const response = await fetch("/api/gallery", {
+                method: "get",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'applcation/json'
-                }
+                    Accept: "application/json",
+                },
             });
 
             if (!response.ok) {
@@ -22,7 +21,7 @@ export default function Index() {
             }
 
             const json = await response.json();
-            if (json.result !== 'success') {
+            if (json.result !== "success") {
                 throw new Error(`${json.result} ${json.message}`);
             }
 
@@ -30,22 +29,25 @@ export default function Index() {
         } catch (err) {
             console.error(err);
         }
+    };
+
+    useEffect(() => {
+        fetchList();
     }, []);
 
     const notifyImage = {
         add: async function (comment, file) {
             try {
-
                 // Create FormData
                 const formData = new FormData();
-                formData.append('comments', comment);
-                formData.append('file', file);
+                formData.append("comments", comment);
+                formData.append("file", file);
 
                 // Post
                 const response = await fetch(`/api/gallery`, {
-                    method: 'post',
-                    headers: {'Accept': 'applcation/json'},
-                    body: formData
+                    method: "post",
+                    headers: { Accept: "application/json" },
+                    body: formData,
                 });
 
                 // fetch success?
@@ -55,7 +57,7 @@ export default function Index() {
 
                 // API success?
                 const json = await response.json();
-                if (json.result !== 'success') {
+                if (json.result !== "success") {
                     throw json.message;
                 }
 
@@ -69,9 +71,9 @@ export default function Index() {
             try {
                 // Delete
                 const response = await fetch(`/api/gallery/${no}`, {
-                    method: 'delete',
-                    headers: {'Accept': 'applcation/json'},
-                    body: null
+                    method: "delete",
+                    headers: { Accept: "application/json" },
+                    body: null,
                 });
 
                 // fetch success?
@@ -81,24 +83,25 @@ export default function Index() {
 
                 // API success?
                 const json = await response.json();
-                if (json.result !== 'success') {
+                if (json.result !== "success") {
                     throw json.message;
                 }
-
                 // re-rendering(update)
-                setImageList(imageList.filter((item) => item.no !== parseInt(json.data)));
+                setImageList(
+                    imageList.filter((item) => item.no != json.data.no)
+                );
             } catch (err) {
                 console.error(err);
             }
-        }
-    }
+        },
+    };
 
     return (
         <MySiteLayout>
             <div className={styles.Gallery}>
-                <Header notifyImage={notifyImage}/>
-                <ImageList imageList={imageList} notifyImage={notifyImage}/>
+                <Header notifyImage={notifyImage} />
+                <ImageList imageList={imageList} notifyImage={notifyImage} />
             </div>
         </MySiteLayout>
-    )
+    );
 }
